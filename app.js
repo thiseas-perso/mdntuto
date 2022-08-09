@@ -4,6 +4,7 @@ const morgan = require('morgan');
 
 const usersRouter = require('./routes/userRoutes');
 const indexRouter = require('./routes/indexRoutes');
+const catalogRouter = require('./routes/catalogRoutes');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/catalog', catalogRouter);
 app.all('*', (req, res, next) => {
   res.status(404).send(`${req.originalUrl}  not found !`);
 });
