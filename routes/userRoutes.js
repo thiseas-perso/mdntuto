@@ -1,5 +1,5 @@
 const express = require('express');
-
+const userController = require('../controllers/userController');
 const router = express.Router();
 
 const messages = [
@@ -24,9 +24,5 @@ router
   .get((req, res) => {
     res.render('cool', { title: 'Cool', messages });
   })
-  .post((req, res) => {
-    const { text, user } = req.body;
-    messages.push({ text, user, added: new Date() });
-    res.redirect(req.originalUrl);
-  });
+  .post(userController.newMessage(messages));
 module.exports = router;
