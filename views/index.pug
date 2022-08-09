@@ -3,5 +3,8 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  if text
-    p= text
+  if messages
+    each msg in messages 
+      h2= msg.text
+      p= msg.user 
+      p= msg.added
