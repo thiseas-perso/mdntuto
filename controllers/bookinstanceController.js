@@ -1,4 +1,5 @@
 const BookInstance = require('../models/bookinstance');
+const Book = require('../models/book');
 
 // Display list of all BookInstances.
 exports.bookinstance_list = async (req, res) => {
@@ -21,13 +22,25 @@ exports.bookinstance_detail = async (req, res) => {
 };
 
 // Display BookInstance create form on GET.
-exports.bookinstance_create_get = function (req, res) {
-  res.send('NOT IMPLEMENTED: BookInstance create GET');
+exports.bookinstance_create_get = async (req, res) => {
+  const books = await Book.find();
+  res.render('bookinstance_form', {
+    title: 'Create BookInstance',
+    book_list: books,
+  });
 };
 
 // Handle BookInstance create on POST.
-exports.bookinstance_create_post = function (req, res) {
-  res.send('NOT IMPLEMENTED: BookInstance create POST');
+exports.bookinstance_create_post = async (req, res) => {
+  const { book, imprint, status, due_back } = req.body;
+  // const books = await Book.find();
+  const bookinstance = await BookInstance.create({
+    book,
+    imprint,
+    status,
+    due_back,
+  });
+  res.redirect(bookinstance.url);
 };
 
 // Display BookInstance delete form on GET.

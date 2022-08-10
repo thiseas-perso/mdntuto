@@ -19,13 +19,20 @@ exports.genre_detail = async (req, res) => {
 };
 
 // Display Genre create form on GET.
-exports.genre_create_get = function (req, res) {
-  res.send('NOT IMPLEMENTED: Genre create GET');
+exports.genre_create_get = (req, res, next) => {
+  res.render('genre_form', { title: 'Create Genre' });
 };
 
 // Handle Genre create on POST.
-exports.genre_create_post = function (req, res) {
-  res.send('NOT IMPLEMENTED: Genre create POST');
+exports.genre_create_post = async (req, res) => {
+  const { name } = req.body;
+  const found = await Genre.findOne({ name });
+  if (found) {
+    res.redirect(found.url);
+  } else if (name) {
+    const genre = await Genre.create({ name });
+    res.redirect(genre.url);
+  }
 };
 
 // Display Genre delete form on GET.
