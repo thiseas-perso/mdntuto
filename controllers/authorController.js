@@ -1,13 +1,21 @@
 const Author = require('../models/author');
+const Book = require('../models/book');
 
 // Display list of all Authors.
-exports.author_list = function (req, res) {
-  res.send('NOT IMPLEMENTED: Author list');
+exports.author_list = async (req, res) => {
+  const author_list = await Author.find().sort([['family_name', 'ascending']]);
+  res.render('author_list', { title: 'Author List', author_list });
 };
 
 // Display detail page for a specific Author.
-exports.author_detail = function (req, res) {
-  res.send('NOT IMPLEMENTED: Author detail: ' + req.params.id);
+exports.author_detail = async (req, res) => {
+  const author = await Author.findById(req.params.id);
+  const author_books = await Book.find({ author: req.params.id });
+  res.render('author_detail', {
+    title: 'Author Detail',
+    author,
+    author_books,
+  });
 };
 
 // Display Author create form on GET.

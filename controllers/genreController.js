@@ -1,13 +1,21 @@
 const Genre = require('../models/genre');
+const Book = require('../models/book');
 
 // Display list of all Genre.
-exports.genre_list = function (req, res) {
-  res.send('NOT IMPLEMENTED: Genre list');
+exports.genre_list = async (req, res) => {
+  const genre_list = await Genre.find();
+  res.render('genre_list', { title: 'Genre list', genre_list });
 };
 
 // Display detail page for a specific Genre.
-exports.genre_detail = function (req, res) {
-  res.send('NOT IMPLEMENTED: Genre detail: ' + req.params.id);
+exports.genre_detail = async (req, res) => {
+  const genre = await Genre.findById(req.params.id);
+  const genre_books = await Book.find({ genre: req.params.id });
+  res.render('genre_detail', {
+    title: 'Genre Detail',
+    genre,
+    genre_books,
+  });
 };
 
 // Display Genre create form on GET.

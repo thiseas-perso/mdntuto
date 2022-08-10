@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
-
-const BookInstanceSchema = new Schema({
-  book: { type: Schema.Types.ObjectId, ref: 'Book', required: true }, //reference to the associated book
+const BookInstanceSchema = new mongoose.Schema({
+  book: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true }, //reference to the associated book
   imprint: { type: String, required: true },
   status: {
     type: String,
